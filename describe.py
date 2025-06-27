@@ -1,8 +1,9 @@
 from load_csv import load
 import sys
-from pandas import to_numeric
+from pandas import to_numeric, DataFrame
 from stats_utils import stats
 import numpy as np
+from sortingHat_utils import get_colnums
 
 def main(argv, argc):
     """
@@ -16,26 +17,25 @@ def main(argv, argc):
         print("No dataset")
         return
     print(data)
-    colnum = []
-    for i in range(len(data.columns)):
-        try :
-            print(to_numeric(data[data.columns[i]]))
-            colnum.append(i)
-        except ValueError:
-            print(end="")
-    datastats = np.zeros((len(colnum),8))
+    colnum = get_colnums(data)
+    datastats = np.zeros((len(colnum),12))
     print(datastats)
     print(colnum)
     j = 0
+    colnames = []
     for i in colnum:
         print(data[data.columns[i]])
         temp = list(data[data.columns[i]])
         datastats[j] = stats([x for x in temp if x == x])
         print(datastats[j])
+        colnames.append(data.columns[i])
         j+=1
     datastats = np.transpose(datastats)
     np.set_printoptions(formatter={'float_kind':'{:f}'.format})
-    print(datastats)
+    df = DataFrame(datastats,columns=colnames)
+    df.index = ["Count","Mean","Std","Min","1%","10%","25%","50%","75%","90%","99%","Max"]
+    print(df)
+
 
 
 
