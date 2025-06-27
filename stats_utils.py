@@ -22,12 +22,63 @@ def stats(column):
     Max = column[Count - 1]
     return Count,Mean,Std,Min,p1,p10,q1,q2,q3,p90,p99,Max
 
+def stats_small(column):
+    """
+    Get stats
+    Names of return variable are self explaining
+    """
+    Count = int(len(column))
+    column.sort()
+    Min = column[0]
+    Max = column[Count - 1]
+    return Count,Min,Max
+
 
 def collapse_mean(data, colnum):
     dattarray = np.array(data)
-    Means = []
-    print(dattarray[:,colnum[0]])
+    Means = [data[0][0]]
     for i in colnum:
         clean = [x for x in dattarray[:,i] if x == x]
         Means.append(sum(clean)/ len(clean))
     return Means
+
+def get_full_stats(data:DataFrame):
+    (colnum, colnames) = get_colnums(data)
+    datastats = np.zeros((len(colnum),12))
+    j = 0
+    for i in colnum:
+        temp = list(data[data.columns[i]])
+        datastats[j] = stats([x for x in temp if x == x])
+        j+=1
+    datastats = np.transpose(datastats)
+    np.set_printoptions(formatter={'float_kind':'{:f}'.format})
+    df = DataFrame(datastats,columns=colnames)
+    df.index = ["Count","Mean","Std","Min","1%","10%","25%","50%","75%","90%","99%","Max"]
+    return df
+
+def get_small_stats(data:DataFrame):
+    (colnum, colnames) = get_colnums(data)
+    datastats = np.zeros((len(colnum),3))
+    j = 0
+    for i in colnum:
+        temp = list(data[data.columns[i]])
+        datastats[j] = stats_small([x for x in temp if x == x])
+        j+=1
+    datastats = np.transpose(datastats)
+    np.set_printoptions(formatter={'float_kind':'{:f}'.format})
+    df = DataFrame(datastats,columns=colnames)
+    df.index = ["Count","Min","Max"]
+    return df
+
+
+def get_colnums(data):
+    colnum = []
+    colnames = []
+    for i in range(len(data.columns)):
+        try :
+            to_numeric(data[data.columns[i]])
+            colnum.append(i)
+            colnames.append(data.columns[i])
+        except ValueError:
+            print(end="")
+    return colnum, colnames
