@@ -1,6 +1,6 @@
 from load_csv import load
 import sys
-from pandas import to_numeric, DataFrame
+from pandas import DataFrame
 from stats_utils import stats
 import numpy as np
 from sortingHat_utils import get_colnums

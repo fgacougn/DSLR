@@ -1,3 +1,6 @@
+from pandas import to_numeric, DataFrame
+import numpy as np
+
 def stats(column):
     """
     Get stats
@@ -18,3 +21,13 @@ def stats(column):
     p99 = column[int((99*Count)/100) -1]
     Max = column[Count - 1]
     return Count,Mean,Std,Min,p1,p10,q1,q2,q3,p90,p99,Max
+
+
+def collapse_mean(data, colnum):
+    dattarray = np.array(data)
+    Means = []
+    print(dattarray[:,colnum[0]])
+    for i in colnum:
+        clean = [x for x in dattarray[:,i] if x == x]
+        Means.append(sum(clean)/ len(clean))
+    return Means

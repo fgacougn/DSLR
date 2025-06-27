@@ -1,8 +1,6 @@
 from load_csv import load
-from pandas import to_numeric, DataFrame
-from stats_utils import stats
-import numpy as np
 from sortingHat_utils import get_colnums
+from stats_utils import collapse_mean
 
 def main(argv, argc):
     """
@@ -34,8 +32,11 @@ def main(argv, argc):
     print ("Slitherin\n", Slitherin)
     print ("Hufflepuff\n", Hufflepuff)
     print ("Gryffindor\n", Gryffindor)
-    print(get_colnums(data))
-
+    colnums = get_colnums(data)
+    RavenclawM = collapse_mean(Ravenclaw, colnums)
+    SlitherinM = collapse_mean(Slitherin, colnums)
+    HufflepuffM = collapse_mean(Hufflepuff, colnums)
+    GryffindorM = collapse_mean(Gryffindor, colnums)
 
 
 
