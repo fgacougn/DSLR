@@ -20,8 +20,11 @@ def main(argv, argc):
     # g = sns.FacetGrid(data, col = "Hogwarts House")
     # g.map_dataframe(sns.histplot,x="Arithmancy", y = "Hogwarts House", hue = "Hogwarts House")
     # g = sns.FacetGrid(dataWide, col = "Course", row = "Hogwarts House")
-    g = sns.FacetGrid(dataWide, col = "Course")
-    g.map_dataframe(sns.histplot,x="Grade",hue = "Hogwarts House", element="step")
+    print(dataWide)
+    g = sns.FacetGrid(dataWide, col = "Course",hue = "Hogwarts House",palette = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red'])
+    g.map_dataframe(sns.histplot,x="Grade")
+    g.add_legend(title="Houses")
+    # plt.legend(title="paf")
     plt.show()
 
 
