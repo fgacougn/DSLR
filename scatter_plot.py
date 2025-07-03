@@ -1,5 +1,5 @@
 from load_csv import load
-from sortingHat_utils import get_mean_by_House, oneline_onedif_to_transfiguration
+from sortingHat_utils import get_mean_by_House, oneline_onedif_to_transfiguration, oneline_onedif_to_Astronomy
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -24,6 +24,15 @@ def main(argv, argc):
     g = sns.FacetGrid(dataWide, col = "Course",hue = "Hogwarts House",palette = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red'])
     g.map_dataframe(sns.scatterplot,x="Grade", y = "Diff to transfiguration")
     g.add_legend(title="Houses")
+    dataWide = oneline_onedif_to_Astronomy(data)
+    # print(dataWide)
+    # g = sns.FacetGrid(data, col = "Hogwarts House")
+    # g.map_dataframe(sns.histplot,x="Arithmancy", y = "Hogwarts House", hue = "Hogwarts House")
+    # g = sns.FacetGrid(dataWide, col = "Course", row = "Hogwarts House")
+    # print(dataWide)
+    h = sns.FacetGrid(dataWide, col = "Course",hue = "Hogwarts House",palette = ['tab:blue', 'tab:green', 'tab:orange', 'tab:red'])
+    h.map_dataframe(sns.scatterplot,x="Grade", y = "Diff to transfiguration")
+    h.add_legend(title="Houses")
     # plt.legend(title="paf")
     plt.show()
 

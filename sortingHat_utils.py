@@ -59,7 +59,7 @@ def oneline_onegrade(data:DataFrame):
             if(round(100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]),0) > 100):
                 print (i[j], small_stats.values[1][k],abs(small_stats.values[2][k]- small_stats.values[1][k]) ,  100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]))
                 raise ValueError
-            newdata.append([i[0],data.columns[j],100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k])]) -50
+            newdata.append([i[0],data.columns[j],100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k])-50])
             k+=1
     return DataFrame(newdata,columns=["Hogwarts House","Course","Grade"])
 
@@ -79,7 +79,27 @@ def oneline_onedif_to_transfiguration(data:DataFrame):
                 if(round(100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]),0) > 100):
                     print (i[j], small_stats.values[1][k],abs(small_stats.values[2][k]- small_stats.values[1][k]) ,  100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]))
                     raise ValueError
-                newdata.append([i[0],data.columns[j],100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]) - 50,transnote - 100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k])-50])
+                newdata.append([i[0],data.columns[j],100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]) - 50,transnote - 100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k])+50])
+            k+=1
+    return DataFrame(newdata,columns=["Hogwarts House","Course","Grade", "Diff to transfiguration"])
+
+def oneline_onedif_to_Astronomy(data:DataFrame):
+    """
+    Astronomy is column 6"""
+    newdata = []
+    small_stats = get_small_stats(data)
+    print("smallstats\n",small_stats.values[0][0],"\n", small_stats)
+    (colnum, colname) = get_colnums(data)
+    print (data.columns)
+    for i in data.values :
+        k = 0
+        transnote = 100 *(i[6] - small_stats.values[1][1]) / abs(small_stats.values[2][1]- small_stats.values[1][1]) -50
+        for j in colnum:
+            if(j != 6):
+                if(round(100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]),0) > 100):
+                    print (i[j], small_stats.values[1][k],abs(small_stats.values[2][k]- small_stats.values[1][k]) ,  100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]))
+                    raise ValueError
+                newdata.append([i[0],data.columns[j],100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]) - 50,transnote - 100 *(i[j] - small_stats.values[1][k]) / abs(small_stats.values[2][k]- small_stats.values[1][k]) + 50])
             k+=1
     return DataFrame(newdata,columns=["Hogwarts House","Course","Grade", "Diff to transfiguration"])
     
