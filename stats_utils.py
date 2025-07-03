@@ -82,3 +82,17 @@ def get_colnums(data):
         except ValueError:
             print(end="")
     return colnum, colnames
+
+
+def get_colnums_regression(data:DataFrame):
+    colnum = []
+    colnames = []
+    for i in range(len(data.columns)):
+        try :
+            to_numeric(data[data.columns[i]])
+            if(data.columns[i] != "Care of Magical Creatures" and data.columns[i] != "Arithmancy"):
+                colnum.append(i)
+                colnames.append(data.columns[i])
+        except ValueError:
+            print(end="")
+    return colnum, colnames
