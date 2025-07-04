@@ -1,5 +1,8 @@
 from load_csv import load
-from sortingHat_utils import get_mean_by_House, normalize_grades
+import numpy as np 
+from pandas import DataFrame
+import gradient_utils as gu
+from gradient_descent import gradient_batch
 
 def main(argv, argc):
     """
@@ -12,12 +15,11 @@ def main(argv, argc):
     if (data is None):
         print("No dataset")
         return
-    data = normalize_grades(data)
-    df = get_mean_by_House(data)
-    print(df)
-    # g = sns.FacetGrid(data, col = "Hogwarts House")
-    # g.map_dataframe(sns.histplot,x="Arithmancy", y = "Hogwarts House", hue = "Hogwarts House")
-    # g = sns.FacetGrid(dataWide, col = "Course", row = "Hogwarts House")
+    data = data.dropna()
+    dataTrain, houses=gu.cleaning(data,[6,8,9,11,13,17])
+    np.apply_along_axis(gu.michelling, 0, dataTrain)
+    sorting_hat = DataFrame(gradient_batch(dataTrain,houses), columns=["Houses",6,8,9,11,13,17])
+    sorting_hat.to_csv("datasets/ticouvre_hairline.csv", index=False)
 
 
 if __name__ == '__main__':
