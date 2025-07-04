@@ -2,6 +2,7 @@ from load_csv import load
 import sys
 from stats_utils import get_full_stats
 
+
 def main(argv, argc):
     """
     Affiching the dataset passing in argument
@@ -13,11 +14,7 @@ def main(argv, argc):
     if (data is None):
         print("No dataset")
         return
-    
-    
     print(get_full_stats(data))
-
-
 
 
 if __name__ == '__main__':
